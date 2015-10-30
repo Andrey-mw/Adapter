@@ -15,8 +15,8 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText poisk;
     private ListView listView;
-
-    List<Example> exampleListView = new ArrayList<>();
+    List<Example> exampleListView;
+    MyAdapter adapter;
 
 
     @Override
@@ -27,13 +27,10 @@ public class MainActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listView);
         poisk = (EditText) findViewById(R.id.poisk);
 
-        exampleListView.add(new Example("Row 1", "1"));
-        exampleListView.add(new Example("Row 2", "2"));
-        exampleListView.add(new Example("Row 3", "3"));
-        exampleListView.add(new Example("Row 4", "4"));
-        exampleListView.add(new Example("Row 5", "5"));
+        initList();
 
-        final MyAdapter adapter = new MyAdapter(exampleListView, this);
+
+        adapter = new MyAdapter(exampleListView, this);
 
         listView.setAdapter(adapter);
 
@@ -47,6 +44,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+//                if (s.toString().equals("")) {
+//                    initList();
+
+//                }
+//                searchItem(s.toString());
+
             }
 
             @Override
@@ -58,6 +61,31 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    public void initList() {
+
+        exampleListView = new ArrayList<>();
+        exampleListView.add(new Example("first", "1"));
+        exampleListView.add(new Example("second", "2"));
+        exampleListView.add(new Example("third", "3"));
+        exampleListView.add(new Example("fourth", "4"));
+        exampleListView.add(new Example("fifth", "5"));
+        exampleListView.add(new Example("sixth", "6"));
+        exampleListView.add(new Example("seventh", "7"));
+        exampleListView.add(new Example("eighth", "8"));
+
+
+    }
+
+//    public void searchItem(String textSearch){
+//        for(Example item: exampleListView){
+//            if(!item.equals(textSearch)){
+//                exampleListView.remove(item);
+//            }
+//            adapter.notifyDataSetChanged();
+//
+//        }
+//    }
 
 
 }

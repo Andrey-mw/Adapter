@@ -18,14 +18,14 @@ import java.util.List;
 public class MyAdapter extends BaseAdapter implements Filterable {
 
     private List<Example> examples;
-    private List<Example> filter;
+    private List<Example> filterCopy;
     private Context context;
 
 
     public MyAdapter(List<Example> examples, Context context) {
         this.context = context;
         this.examples = examples;
-        this.filter = new ArrayList<>(examples);
+        this.filterCopy = new ArrayList<>(examples);
 
     }
 
@@ -75,11 +75,41 @@ public class MyAdapter extends BaseAdapter implements Filterable {
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-                return null;
+                String filterSeq = constraint.toString().toLowerCase();
+                FilterResults results = new FilterResults();
+                filterCopy = new ArrayList<Example>();
+
+                if (constraint != null && examples != null) {
+//                    int i = 0;
+//                    while (i < examples.size()) {
+//                        Example item = examples.get(i);
+//                        filterCopy.add(item);
+//                        i++;
+//                    }
+
+                    for (Example item : examples) {
+                        if (item.toString().toLowerCase().contains(filterSeq))
+                            filterCopy.add(item);
+
+                    }
+                    results.values = filterCopy;
+                    results.count = filterCopy.size();
+                }
+
+
+                return results;
             }
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
+
+                examples = (List<Example>) results.values;
+                if (results.count > 0) {
+                    notifyDataSetChanged();
+                } else {
+                    notifyDataSetChanged();
+                }
+
 
             }
         };
